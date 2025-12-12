@@ -1,128 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Name Submit</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantum Brew V.C.F. - Registration</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0d1117;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background: #161b22;
-            padding: 25px;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 12px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.5);
-        }
-
-        h2 {
-            text-align: center;
-            color: #4fbcff;
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            margin-bottom: 15px;
-            background: #21262d;
-            color: white;
-        }
-
-        button {
-            width: 100%;
-            background: #4fbcff;
-            color: black;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-    </style>
+  <link href="styles.css" rel="stylesheet" />
+  <meta name="referrer" content="no-referrer" />
 </head>
 <body>
+  <div class="droplets" aria-hidden="true"></div>
 
-    <div class="container">
-        <h2>Enter Your Name</h2>
-
-        <input id="username" type="text" placeholder="Your name...">
-
-        <button onclick="submitName()">Submit</button>
+  <!-- popup notice -->
+  <div id="popup" class="popup" role="status" aria-live="polite">
+    <div class="icon">⚠️</div>
+    <div class="popup-text">
+      <div class="popup-title">Dear users</div>
+      <div class="popup-body">The VCF file will drop in the channel — make sure to join using the button below after submission.</div>
     </div>
+    <button class="close" id="closePopup" aria-label="Close popup">✕</button>
+  </div>
 
-    <!-- Firebase + Script -->
-    <script type="module">
-        // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  <main class="container">
+    <div class="card">
+      <div class="header">
+        <div class="title">QUANTUM BREW V.C.F</div>
+        <div class="subtitle">New Drop • Clean • Secure</div>
+      </div>
 
-        // Your Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyAf-V7X_cqj3qIlVaN_crjeUlJ52zHRvLU",
-            authDomain: "prince-77769.firebaseapp.com",
-            databaseURL: "https://prince-77769-default-rtdb.firebaseio.com",
-            projectId: "prince-77769",
-            storageBucket: "prince-77769.firebasestorage.app",
-            messagingSenderId: "806883629840",
-            appId: "1:806883629840:web:019a24078ba74db55ea395",
-            measurementId: "G-LSFYWNWZFL"
-        };
+      <div class="circle-wrap" aria-hidden="true">
+        <div class="stat">
+          <div class="stat-name">Registered</div>
+          <div class="circle" id="circle-registered">
+            <svg viewBox="0 0 36 36"><path class="bg" d="M18 2.0845a15.9155 15.9155 0 1 1 0 31.831"/></svg>
+            <svg viewBox="0 0 36 36"><path id="arc-registered" class="arc" d=""/></svg>
+            <div class="label"><div id="val-registered">0</div><small>users</small></div>
+          </div>
+        </div>
 
-        // Init Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        <div class="stat">
+          <div class="stat-name">Remaining</div>
+          <div class="circle" id="circle-remaining">
+            <svg viewBox="0 0 36 36"><path class="bg" d="M18 2.0845a15.9155 15.9155 0 1 1 0 31.831"/></svg>
+            <svg viewBox="0 0 36 36"><path id="arc-remaining" class="arc" d=""/></svg>
+            <div class="label"><div id="val-remaining">0</div><small>left</small></div>
+          </div>
+        </div>
 
-        // Submit Function
-        window.submitName = function () {
-            const typedName = document.getElementById("username").value.trim();
+        <div class="stat">
+          <div class="stat-name">Target</div>
+          <div class="circle" id="circle-target">
+            <svg viewBox="0 0 36 36"><path class="bg" d="M18 2.0845a15.9155 15.9155 0 1 1 0 31.831"/></svg>
+            <svg viewBox="0 0 36 36"><path id="arc-target" class="arc" d=""/></svg>
+            <div class="label"><div id="val-target">800</div><small>goal</small></div>
+          </div>
+        </div>
+      </div>
 
-            if (typedName === "") {
-                alert("Please enter a name.");
-                return;
-            }
+      <form id="vcfForm" autocomplete="off" novalidate>
+        <div class="field">
+          <label class="label">Full name</label>
+          <input id="fullname" name="fullname" type="text" placeholder="Full name (no emoji)" required />
+        </div>
 
-            // Add prefix automatically
-            const finalName = "🏝 " + typedName;
+        <div class="field">
+          <label class="label">Phone</label>
+          <input id="phone" name="phone" type="tel" placeholder="+254700123456" required />
+        </div>
 
-            // Firebase save
-            const namesRef = ref(db, "users/");
-            const newEntry = push(namesRef);
+        <div class="buttons">
+          <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
+          <a id="joinBtn" class="btn btn-join" target="_blank" rel="noopener">Join Channel</a>
+          <a id="adminBtn" class="btn btn-secondary" target="_blank" rel="noopener">Contact Admin</a>
+        </div>
 
-            set(newEntry, {
-                name: finalName,
-                timestamp: Date.now()
-            })
-            .then(() => {
-                alert("Saved: " + finalName);
-                document.getElementById("username").value = "";
-            })
-            .catch(err => {
-                alert("Error saving name.");
-                console.error(err);
-            });
-        }
-    </script>
+        <div id="alerts" class="alerts">
+          <div id="success" class="alert success" role="status">Contact submitted to VCF successful. Redirecting...</div>
+          <div id="exists" class="alert error">User already exists</div>
+          <div id="err" class="alert error">Submission error</div>
+        </div>
 
+      </form>
+
+      <div class="notice">⚠️ If you don't follow the channel, don't blame me if you miss the drop.</div>
+
+    </div>
+  </main>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
