@@ -1,1 +1,78 @@
+:root{
+  --bg-a:#0b1a2b;
+  --bg-b:#081225;
+  --card: rgba(255,255,255,0.03);
+  --accent-start:#7c4dff; /* new palette, not screenshot */
+  --accent-mid:#00e5d1;
+  --accent-end:#7be495;
+  --accent-join:#ffb86b;
+  --white:#ffffff;
+  --muted:rgba(255,255,255,0.65);
+  --success:#00e676;
+  --danger:#ff3b30;
+  --card-radius:18px;
+}
 
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--white);background:linear-gradient(180deg,var(--bg-a),var(--bg-b));-webkit-font-smoothing:antialiased}
+.container{max-width:420px;margin:28px auto;padding:18px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--card-radius);padding:18px;box-shadow:0 20px 40px rgba(2,8,20,0.6);border:1px solid rgba(255,255,255,0.03)}
+.header{text-align:center;padding-bottom:8px}
+.title{font-weight:800;letter-spacing:2px;font-size:20px;background:linear-gradient(90deg,var(--accent-start),var(--accent-mid),var(--accent-end));-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{font-size:12px;color:var(--muted);margin-top:6px}
+
+/* droplets overlay */
+.droplets{position:fixed;inset:0;pointer-events:none;background-image:
+  radial-gradient(circle at 10% 5%, rgba(255,255,255,0.02) 0 4px, transparent 6px),
+  radial-gradient(circle at 80% 35%, rgba(255,255,255,0.02) 0 3px, transparent 5px),
+  radial-gradient(circle at 40% 80%, rgba(255,255,255,0.015) 0 2.5px, transparent 3px);
+mix-blend-mode:overlay;opacity:0.9;animation:drift 18s linear infinite}
+@keyframes drift{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+/* circles */
+.circle-wrap{display:flex;gap:14px;justify-content:space-between;margin:16px 0 12px}
+.stat{flex:1;text-align:center}
+.stat-name{font-weight:700;margin-bottom:8px;color:var(--muted);font-size:13px}
+.circle{width:110px;height:110px;margin:0 auto;position:relative}
+.circle svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.circle .bg{fill:none;stroke:rgba(255,255,255,0.03);stroke-width:2}
+.arc{fill:none;stroke-width:2.8;stroke-linecap:round;stroke-dasharray:0 100;transition:stroke-dasharray .6s ease}
+/* gradient strokes - using CSS stroke with gradient via SVG defs is done in JS for simplicity */
+
+/* label */
+.label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;font-weight:800}
+.label small{font-weight:600;color:var(--muted);font-size:12px}
+
+/* form styles */
+.field{margin-bottom:12px}
+.label{display:block;margin-bottom:6px;color:var(--muted);font-weight:700;font-size:13px}
+input[type="text"],input[type="tel"]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(255,255,255,0.02));color:var(--white);font-size:15px;outline:none;box-shadow:inset 0 2px 8px rgba(0,0,0,0.45)}
+input::placeholder{color:rgba(255,255,255,0.3)}
+
+.buttons{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px;border-radius:12px;font-weight:800;cursor:pointer;border:none;text-decoration:none}
+.btn-primary{background:linear-gradient(90deg,var(--accent-start),var(--accent-mid));color:#02121a;box-shadow:0 10px 28px rgba(124,77,255,0.12)}
+.btn-join{background:linear-gradient(90deg,var(--accent-join),#ffd36b);color:#02121a}
+.btn-secondary{background:linear-gradient(90deg,#07142a,#0d2433);color:var(--white);border:1px solid rgba(255,255,255,0.03)}
+
+/* alerts */
+.alerts{margin-top:12px}
+.alert{display:none;padding:8px 10px;border-radius:10px;font-weight:700;text-align:center}
+.alert.success{display:none;color:var(--success);background:rgba(0,230,118,0.06)}
+.alert.error{display:none;color:var(--danger);background:rgba(255,59,48,0.06)}
+
+.notice{margin-top:10px;text-align:center;color:var(--muted);font-size:13px}
+
+/* popup */
+.popup{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:linear-gradient(90deg,#071129,#0a1a2b);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 10px 26px rgba(0,0,0,0.6);z-index:999}
+.popup .icon{font-size:18px}
+.popup-title{font-weight:800;color:#ffd86a}
+.popup-body{font-size:13px;color:var(--muted)}
+.popup .close{margin-left:auto;background:rgba(255,255,255,0.02);border:none;color:var(--muted);padding:6px 8px;border-radius:8px;cursor:pointer}
+
+/* small screens */
+@media(max-width:480px){
+  .container{padding:12px}
+  .circle{width:84px;height:84px}
+  .circle-wrap{gap:8px}
+}
