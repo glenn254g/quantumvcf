@@ -5,11 +5,16 @@
 
 body {
   margin: 0;
-  height: 100vh;
+  min-height: 100vh; /* 🔧 MODIFIED: allow full screen */
   background: linear-gradient(270deg, #020024, #090979, #00d4ff);
   background-size: 600% 600%;
   animation: bgMove 15s ease infinite;
   color: #fff;
+
+  /* 🔧 MODIFIED: center container vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes bgMove {
@@ -18,10 +23,11 @@ body {
   100% {background-position:0% 50%}
 }
 
+/* 🔧 MODIFIED: make form responsive & larger */
 .container {
-  max-width: 380px;
-  margin: auto;
-  margin-top: 50px;
+  width: 95%;
+  max-width: 420px;   /* was 380px */
+  margin: 0;
   background: rgba(0,0,0,0.55);
   padding: 25px;
   border-radius: 20px;
@@ -52,15 +58,16 @@ body {
 
 input {
   width: 100%;
-  padding: 12px;
+  padding: 14px; /* 🔧 MODIFIED: better touch size */
   margin-top: 10px;
   border-radius: 30px;
   border: none;
+  font-size: 15px;
 }
 
 .btn {
   width: 100%;
-  padding: 14px;
+  padding: 15px; /* 🔧 MODIFIED */
   border-radius: 30px;
   border: none;
   margin-top: 12px;
@@ -82,19 +89,26 @@ input {
   text-decoration: none;
 }
 
-.hidden { display: none; }
+.hidden {
+  display: none;
+}
 
+/* 🔧 MODIFIED: popup no longer blocks after hide */
 .popup {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.7);
-  display: flex;
+  display: none;              /* 🔧 MODIFIED: JS controls it */
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
-.popup div {
+/* 🔧 MODIFIED: ensure popup content is centered & clickable */
+.popup p {
   background: #111;
   padding: 20px;
   border-radius: 15px;
+  text-align: center;
+  max-width: 90%;
 }
