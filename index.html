@@ -1,49 +1,49 @@
+> PRINCE:
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QUANTUM V.C.F</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<div class="container">
-  <h1 class="glow">QUANTUM V.C.F</h1>
-  <p class="subtitle">New Drop • Clean • Secure</p>
-
-  <div class="stats">
-    <div>Registered: <span id="registered">0</span></div>
-    <div>Remaining: <span id="remaining">1000</span></div>
-    <div>Target: 1000</div>
+  <div class="overlay"></div>
+  <div class="container">
+    <h1 class="glow">QUANTUM V.C.F</h1>
+    <p class="subtitle">New Drop • Clean • Secure</p>
+    
+    <div class="stats">
+      <div>Registered: <span id="registered">0</span></div>
+      <div>Remaining: <span id="remaining">1000</span></div>
+      <div>Target: 1000</div>
+    </div>
+    
+    <div class="progress-circle">
+      <span id="progressPercent">0%</span>
+    </div>
+    
+    <input type="text" id="name" placeholder="Full name" />
+    <input type="tel" id="phone" placeholder="Phone (any country)" />
+    
+    <button class="btn submit" onclick="submitContact()">Submit</button>
+    <button class="btn admin" onclick="openAdmin()">Contact Admin</button>
+    <button class="btn more" onclick="joinGroup()">Join Our Group</button>
+    
+    <a id="downloadVCF" class="download hidden">Download VCF</a>
   </div>
 
-  <div class="progress-circle">
-    <span id="progressPercent">0%</span>
+  <div id="popup" class="popup">
+    <div class="popup-box">
+      <p>⚠️ The VCF file will drop in our group.<br>Kindly click <b>Join Our Group</b> below not to miss it.</p>
+      <button onclick="closePopup()">OK</button>
+    </div>
   </div>
 
-  <input type="text" id="name" placeholder="Full name" />
-  <input type="tel" id="phone" placeholder="Phone (any country)" />
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-  <button class="btn submit" onclick="submitContact()">Submit</button>
-  <button class="btn admin" onclick="openAdmin()">Contact Admin</button>
-  <button class="btn more" onclick="joinGroup()">Join Our Group</button>
-
-  <a id="downloadVCF" class="download hidden">Download VCF</a>
-</div>
-
-<div id="popup" class="popup">
-  <div class="popup-box">
-    <p>
-      ⚠️ The VCF file will drop in our group.<br>
-      Kindly click <b>Join Our Group</b> below not to miss it.
-    </p>
-    <button class="btn submit" onclick="closePopup()">OK</button>
-  </div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+  <!-- Your JS -->
+  <script src="script.js"></script>
 </body>
 </html>
