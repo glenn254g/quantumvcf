@@ -1,3 +1,4 @@
+> PRINCE:
 // 🔥 FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyBIJ-8jROkaw8WeZvUYXu-w0shxZRT706I",
@@ -16,7 +17,7 @@ const db = firebase.firestore();
 const TARGET = 1000;
 const EMOJI = "🔵";
 const TELEGRAM_GROUP = "https://t.me/YOURGROUP";     // replace
-const TELEGRAM_ADMIN = "https://t.me/YOURUSERNAME";  // replace
+const TELEGRAM_ADMIN = "https://t.me/YOURUSERNAME"; // replace
 
 // ELEMENTS
 const registeredEl = document.getElementById("registered");
@@ -34,7 +35,8 @@ successMsg.style.padding = "15px";
 successMsg.style.marginTop = "15px";
 successMsg.style.borderRadius = "8px";
 successMsg.style.textAlign = "center";
-successMsg.innerHTML = "✅ Contact submitted successfully!<br>Join the Telegram group — the big drop will be shared there.";
+successMsg.innerHTML =
+  "✅ Contact submitted successfully!<br>Join the Telegram group — the big drop will be shared there.";
 document.querySelector(".container").appendChild(successMsg);
 
 // 📊 LIVE COUNTER
@@ -44,7 +46,9 @@ db.collection("stats").doc("counter").onSnapshot(doc => {
   remainingEl.innerText = TARGET - reg;
   const percent = Math.min(100, Math.floor((reg / TARGET) * 100));
   percentEl.innerText = percent + "%";
+
   circle.style.background = conic-gradient(#00ffcc ${percent}%, #333 ${percent}%);
+
   if (reg >= TARGET) generateVCF();
 });
 
@@ -63,6 +67,7 @@ function submitContact() {
         alert("Contact already submitted");
         return;
       }
+
       return db.collection("contacts").add({
         name: EMOJI + " " + name,
         phone: phone
@@ -74,7 +79,9 @@ function submitContact() {
     })
     .then(() => {
       successMsg.style.display = "block";
-      setTimeout(() => { window.location.href = TELEGRAM_GROUP; }, 3000);
+      setTimeout(() => {
+        window.location.href = TELEGRAM_GROUP;
+      }, 3000);
     })
     .catch(err => {
       console.error("Error:", err);
@@ -88,7 +95,12 @@ function generateVCF() {
     let vcf = "";
     snapshot.forEach(doc => {
       const d = doc.data();
-      vcf += "BEGIN:VCARD\nVERSION:3.0\nFN:" + d.name + "\nTEL:" + d.phone + "\nEND:VCARD\n";
+      vcf +=
+        "BEGIN:VCARD\n" +
+        "VERSION:3.0\n" +
+        "FN:" + d.name + "\n" +
+        "TEL:" + d.phone + "\n" +
+        "END:VCARD\n";
     });
     const blob = new Blob([vcf], { type: "text/vcard" });
     downloadBtn.href = URL.createObjectURL(blob);
@@ -119,7 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
     popup.style.pointerEvents = "none";
   }, 60000);
 });
-// Make functions accessible to HTML buttons
+
+> PRINCE:
+// 🔹 Make functions accessible to HTML buttons
 window.submitContact = submitContact;
 window.openAdmin = openAdmin;
 window.joinGroup = joinGroup;
