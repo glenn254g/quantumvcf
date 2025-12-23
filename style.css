@@ -3,24 +3,23 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
-  height: 100vh;
-  background: #050517;  /* 🔧 solid background, removed gradient */
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
+body {
+  background: #050517;
+  color: #fff;
+}
+
+/* FULL SCREEN FIX */
 .container {
-  width: 100vw;           /* 🔧 full screen width */
-  height: 100vh;          /* 🔧 full screen height */
-  max-width: none;        /* 🔧 remove max-width restriction */
-  margin: 0;
+  min-height: 100svh; /* mobile-safe viewport */
+  width: 100%;
   padding: 25px;
-  border-radius: 0;       /* 🔧 remove rounding */
-  background: #050517;    /* 🔧 solid background */
+  background: #050517;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,10 +30,15 @@ body {
   text-shadow: 0 0 15px #00d4ff;
 }
 
+.subtitle {
+  opacity: 0.85;
+}
+
 .stats {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
+  margin-top: 10px;
 }
 
 .progress-circle {
@@ -86,20 +90,20 @@ input {
   display: none;
 }
 
+/* POPUP */
 .popup {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.7);
-  display: none;          /* 🔧 JS controls it */
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  pointer-events: auto;
 }
 
-.popup p {
+.popup-box {
   background: #111;
-  padding: 20px;
+  padding: 25px;
   border-radius: 15px;
   text-align: center;
   max-width: 90%;
