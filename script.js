@@ -14,7 +14,7 @@ const db = firebase.firestore();
 
 const TARGET = 1000;
 const EMOJI = "🔵";
-const TELEGRAM_GROUP = "https://t.me/YOURGROUP";      // replace
+const TELEGRAM_GROUP = "https://t.me/betfitystakers";      // replace
 const TELEGRAM_ADMIN = "https://t.me/YOURUSERNAME";  // replace
 
 const registeredEl = document.getElementById("registered");
