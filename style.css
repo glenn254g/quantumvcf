@@ -5,32 +5,25 @@
 
 body {
   margin: 0;
-  min-height: 100vh; /* 🔧 MODIFIED: allow full screen */
-  background: linear-gradient(270deg, #020024, #090979, #00d4ff);
-  background-size: 600% 600%;
-  animation: bgMove 15s ease infinite;
+  height: 100vh;
+  background: #050517;  /* 🔧 solid background, removed gradient */
   color: #fff;
-
-  /* 🔧 MODIFIED: center container vertically */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-@keyframes bgMove {
-  0% {background-position:0% 50%}
-  50% {background-position:100% 50%}
-  100% {background-position:0% 50%}
-}
-
-/* 🔧 MODIFIED: make form responsive & larger */
 .container {
-  width: 95%;
-  max-width: 420px;   /* was 380px */
+  width: 100vw;           /* 🔧 full screen width */
+  height: 100vh;          /* 🔧 full screen height */
+  max-width: none;        /* 🔧 remove max-width restriction */
   margin: 0;
-  background: rgba(0,0,0,0.55);
   padding: 25px;
-  border-radius: 20px;
+  border-radius: 0;       /* 🔧 remove rounding */
+  background: #050517;    /* 🔧 solid background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
 }
 
@@ -58,7 +51,7 @@ body {
 
 input {
   width: 100%;
-  padding: 14px; /* 🔧 MODIFIED: better touch size */
+  padding: 14px;
   margin-top: 10px;
   border-radius: 30px;
   border: none;
@@ -67,7 +60,7 @@ input {
 
 .btn {
   width: 100%;
-  padding: 15px; /* 🔧 MODIFIED */
+  padding: 15px;
   border-radius: 30px;
   border: none;
   margin-top: 12px;
@@ -93,18 +86,17 @@ input {
   display: none;
 }
 
-/* 🔧 MODIFIED: popup no longer blocks after hide */
 .popup {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.7);
-  display: none;              /* 🔧 MODIFIED: JS controls it */
+  display: none;          /* 🔧 JS controls it */
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  pointer-events: auto;
 }
 
-/* 🔧 MODIFIED: ensure popup content is centered & clickable */
 .popup p {
   background: #111;
   padding: 20px;
