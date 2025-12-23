@@ -1,4 +1,4 @@
-// 🔥 FIREBASE CONFIG (PASTE YOUR REAL CONFIG HERE)
+// 🔥 FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyBIJ-8jROkaw8WeZvUYXu-w0shxZRT706I",
   authDomain: "quantum-vcf.firebaseapp.com",
@@ -14,8 +14,8 @@ const db = firebase.firestore();
 
 const TARGET = 1000;
 const EMOJI = "🔵";
-const TELEGRAM_GROUP = "https://t.me/betfitystakers";      // replace
-const TELEGRAM_ADMIN = "@prince101g";  // replace
+const TELEGRAM_GROUP = "https://t.me/YOURGROUP";      // replace
+const TELEGRAM_ADMIN = "https://t.me/YOURUSERNAME";  // replace
 
 const registeredEl = document.getElementById("registered");
 const remainingEl = document.getElementById("remaining");
@@ -23,7 +23,7 @@ const circle = document.querySelector(".progress-circle");
 const percentEl = document.getElementById("progressPercent");
 const downloadBtn = document.getElementById("downloadVCF");
 
-// 🔧 MODIFIED: success message element (created dynamically, NOT HTML change)
+// 🔧 success message
 const successMsg = document.createElement("div");
 successMsg.style.display = "none";
 successMsg.style.background = "#1f9d55";
@@ -34,7 +34,6 @@ successMsg.style.borderRadius = "8px";
 successMsg.style.textAlign = "center";
 successMsg.innerHTML =
   "✅ Contact submitted successfully!<br>Join the Telegram group — the big will drop there.";
-
 document.querySelector(".container").appendChild(successMsg);
 
 // LIVE COUNTER
@@ -47,7 +46,6 @@ db.collection("stats").doc("counter").onSnapshot(doc => {
   let percent = Math.floor((reg / TARGET) * 100);
   percentEl.innerText = percent + "%";
 
-  // 🔧 MODIFIED: fixed invalid CSS syntax
   circle.style.background = conic-gradient(#00ffcc ${percent}%, #333 ${percent}%);
 
   if (reg >= TARGET) generateVCF();
@@ -64,21 +62,17 @@ function submitContact() {
     .then(snap => {
       if (!snap.empty) return alert("Contact already submitted");
 
-      // Add contact
       db.collection("contacts").add({
         name: EMOJI + " " + name,
         phone
       });
 
-      // Increment counter
       db.collection("stats").doc("counter").update({
         registered: firebase.firestore.FieldValue.increment(1)
       });
 
-      // 🔧 MODIFIED: replace alert + instant redirect
       successMsg.style.display = "block";
 
-      // 🔧 MODIFIED: redirect after 3 seconds
       setTimeout(() => {
         window.location.href = TELEGRAM_GROUP;
       }, 3000);
@@ -90,7 +84,6 @@ function submitContact() {
 function generateVCF() {
   db.collection("contacts").get().then(snapshot => {
     let vcf = "";
-
     snapshot.forEach(doc => {
       let d = doc.data();
       vcf += BEGIN:VCARD
@@ -114,17 +107,19 @@ function joinGroup() { window.location.href = TELEGRAM_GROUP; }
 
 // POPUP CLOSE
 function closePopup() {
-  document.getElementById("popup").style.display = "none";
+  const popup = document.getElementById("popup");
+  popup.style.display = "none";
+  popup.style.pointerEvents = "none";
 }
 
-// 🔧 MODIFIED: popup auto-hide after 1 minute
+// SHOW POPUP EVERY PAGE LOAD
 window.onload = () => {
   const popup = document.getElementById("popup");
-  if (popup) {
-    popup.style.display = "flex";
+  popup.style.display = "flex";
+  popup.style.pointerEvents = "auto";
 
-    setTimeout(() => {
-      popup.style.display = "none";
-    }, 60000); // 1 minute
-  }
+  setTimeout(() => {
+    popup.style.display = "none";
+    popup.style.pointerEvents = "none";
+  }, 60000); // 1 minute
 };
