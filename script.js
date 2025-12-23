@@ -1,125 +1,50 @@
-// 🔥 FIREBASE CONFIG
-const firebaseConfig = {
-  apiKey: "AIzaSyBIJ-8jROkaw8WeZvUYXu-w0shxZRT706I",
-  authDomain: "quantum-vcf.firebaseapp.com",
-  projectId: "quantum-vcf",
-  storageBucket: "quantum-vcf.firebasestorage.app",
-  messagingSenderId: "628852383928",
-  appId: "1:628852383928:web:03bb582e76cf2aa6fa144d"
-};
+> PRINCE:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QUANTUM V.C.F</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+<div class="container">
+  <h1 class="glow">QUANTUM V.C.F</h1>
+  <p class="subtitle">New Drop • Clean • Secure</p>
 
-const TARGET = 1000;
-const EMOJI = "🔵";
-const TELEGRAM_GROUP = "https://t.me/betfitystakers";      // replace
-const TELEGRAM_ADMIN = "https://t.me/YOURUSERNAME";  // replace
+  <div class="stats">
+    <div>Registered: <span id="registered">0</span></div>
+    <div>Remaining: <span id="remaining">1000</span></div>
+    <div>Target: 1000</div>
+  </div>
 
-const registeredEl = document.getElementById("registered");
-const remainingEl = document.getElementById("remaining");
-const circle = document.querySelector(".progress-circle");
-const percentEl = document.getElementById("progressPercent");
-const downloadBtn = document.getElementById("downloadVCF");
+  <div class="progress-circle">
+    <span id="progressPercent">0%</span>
+  </div>
 
-// 🔧 success message
-const successMsg = document.createElement("div");
-successMsg.style.display = "none";
-successMsg.style.background = "#1f9d55";
-successMsg.style.color = "#fff";
-successMsg.style.padding = "15px";
-successMsg.style.marginTop = "15px";
-successMsg.style.borderRadius = "8px";
-successMsg.style.textAlign = "center";
-successMsg.innerHTML =
-  "✅ Contact submitted successfully!<br>Join the Telegram group — the big will drop there.";
-document.querySelector(".container").appendChild(successMsg);
+  <input type="text" id="name" placeholder="Full name" />
+  <input type="tel" id="phone" placeholder="Phone (any country)" />
 
-// LIVE COUNTER
-db.collection("stats").doc("counter").onSnapshot(doc => {
-  let reg = doc.data().registered || 0;
+  <button class="btn submit" onclick="submitContact()">Submit</button>
+  <button class="btn admin" onclick="openAdmin()">Contact Admin</button>
+  <button class="btn more" onclick="joinGroup()">Join Our Group</button>
 
-  registeredEl.innerText = reg;
-  remainingEl.innerText = TARGET - reg;
+  <a id="downloadVCF" class="download hidden">Download VCF</a>
+</div>
 
-  let percent = Math.floor((reg / TARGET) * 100);
-  percentEl.innerText = percent + "%";
+<div id="popup" class="popup">
+  <div class="popup-box">
+    <p>
+      ⚠️ The VCF file will drop in our group.<br>
+      Kindly click <b>Join Our Group</b> below not to miss it.
+    </p>
+    <button class="btn submit" onclick="closePopup()">OK</button>
+  </div>
+</div>
 
-  circle.style.background = conic-gradient(#00ffcc ${percent}%, #333 ${percent}%);
-
-  if (reg >= TARGET) generateVCF();
-});
-
-// SUBMIT CONTACT
-function submitContact() {
-  let name = document.getElementById("name").value.trim();
-  let phone = document.getElementById("phone").value.trim();
-
-  if (!name || !phone) return alert("Fill all fields");
-
-  db.collection("contacts").where("phone", "==", phone).get()
-    .then(snap => {
-      if (!snap.empty) return alert("Contact already submitted");
-
-      db.collection("contacts").add({
-        name: EMOJI + " " + name,
-        phone
-      });
-
-      db.collection("stats").doc("counter").update({
-        registered: firebase.firestore.FieldValue.increment(1)
-      });
-
-      successMsg.style.display = "block";
-
-      setTimeout(() => {
-        window.location.href = TELEGRAM_GROUP;
-      }, 3000);
-    })
-    .catch(err => console.error("Error adding contact:", err));
-}
-
-// GENERATE VCF FILE
-function generateVCF() {
-  db.collection("contacts").get().then(snapshot => {
-    let vcf = "";
-    snapshot.forEach(doc => {
-      let d = doc.data();
-      vcf += BEGIN:VCARD
-VERSION:3.0
-FN:${d.name}
-TEL:${d.phone}
-END:VCARD
-;
-    });
-
-    let blob = new Blob([vcf], { type: "text/vcard" });
-    downloadBtn.href = URL.createObjectURL(blob);
-    downloadBtn.download = "QUANTUM_VCF.vcf";
-    downloadBtn.classList.remove("hidden");
-  });
-}
-
-// REDIRECTS
-function openAdmin() { window.location.href = TELEGRAM_ADMIN; }
-function joinGroup() { window.location.href = TELEGRAM_GROUP; }
-
-// POPUP CLOSE
-function closePopup() {
-  const popup = document.getElementById("popup");
-  popup.style.display = "none";
-  popup.style.pointerEvents = "none";
-}
-
-// SHOW POPUP EVERY PAGE LOAD
-window.onload = () => {
-  const popup = document.getElementById("popup");
-  popup.style.display = "flex";
-  popup.style.pointerEvents = "auto";
-
-  setTimeout(() => {
-    popup.style.display = "none";
-    popup.style.pointerEvents = "none";
-  }, 60000); // 1 minute
-};
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
