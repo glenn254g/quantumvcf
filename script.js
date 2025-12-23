@@ -36,20 +36,17 @@ successMsg.style.borderRadius = "8px";
 successMsg.style.textAlign = "center";
 successMsg.innerHTML =
   "✅ Contact submitted successfully!<br>Join the Telegram group — the big drop will be shared there.";
-
 document.querySelector(".container").appendChild(successMsg);
 
 // 📊 LIVE COUNTER
 db.collection("stats").doc("counter").onSnapshot(doc => {
   const reg = doc.exists ? doc.data().registered || 0 : 0;
-
   registeredEl.innerText = reg;
   remainingEl.innerText = TARGET - reg;
-
   const percent = Math.min(100, Math.floor((reg / TARGET) * 100));
   percentEl.innerText = percent + "%";
 
-  // FIXED conic-gradient
+  // ✅ Fixed conic-gradient syntax using backticks
   circle.style.background = conic-gradient(#00ffcc ${percent}%, #333 ${percent}%);
 
   if (reg >= TARGET) generateVCF();
@@ -59,7 +56,6 @@ db.collection("stats").doc("counter").onSnapshot(doc => {
 function submitContact() {
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
-
   if (!name || !phone) {
     alert("Fill all fields");
     return;
@@ -76,7 +72,6 @@ function submitContact() {
         name: EMOJI + " " + name,
         phone: phone
       }).then(() => {
-        // safer update than set
         return db.collection("stats").doc("counter").update({
           registered: firebase.firestore.FieldValue.increment(1)
         });
@@ -98,7 +93,6 @@ function submitContact() {
 function generateVCF() {
   db.collection("contacts").get().then(snapshot => {
     let vcf = "";
-
     snapshot.forEach(doc => {
       const d = doc.data();
       vcf +=
@@ -108,7 +102,6 @@ function generateVCF() {
         "TEL:" + d.phone + "\n" +
         "END:VCARD\n";
     });
-
     const blob = new Blob([vcf], { type: "text/vcard" });
     downloadBtn.href = URL.createObjectURL(blob);
     downloadBtn.download = "QUANTUM_VCF.vcf";
@@ -131,10 +124,8 @@ function closePopup() {
 window.onload = () => {
   const popup = document.getElementById("popup");
   if (!popup) return;
-
   popup.style.display = "flex";
   popup.style.pointerEvents = "auto";
-
   setTimeout(() => {
     popup.style.display = "none";
     popup.style.pointerEvents = "none";
