@@ -131,3 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
     popup.style.pointerEvents = "none";
   }, 60000);
 });
+// 🔹 MAKE FUNCTIONS ACCESSIBLE TO HTML BUTTONS
+window.submitContact = submitContact;
+window.openAdmin = openAdmin;
+window.joinGroup = joinGroup;
+window.closePopup = closePopup;
